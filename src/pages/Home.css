@@ -1,0 +1,24 @@
+/* src/pages/Home.css or src/theme/variables.css */
+body.barcode-scanner-active {
+  visibility: hidden;
+  --background: transparent;
+  /* For Ionic components */
+  --ion-background-color: transparent;
+  /* For Ionic components */
+  background-color: transparent !important;
+  /* Ensure body background is transparent */
+}
+
+/* Ensure other elements are also hidden if they overlay */
+body.barcode-scanner-active ion-app,
+body.barcode-scanner-active ion-content,
+body.barcode-scanner-active ion-page {
+  visibility: hidden;
+  /* Or display: none; if needed, but visibility is often better */
+  background: transparent !important;
+}
+
+/* You might need to make a specific modal or overlay visible if your scanner UI is part of the webview */
+/* .barcode-scanner-modal {
+  visibility: visible !important;
+} */
