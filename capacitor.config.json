@@ -1,5 +1,5 @@
 {
   "addID": "baby-food",
   "appName": "baby-food-scanner",
-  "wedDir": "dist"
+  "webDir": "dist"
 }
