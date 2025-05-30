@@ -9,9 +9,9 @@ import {
 } from "@ionic/react";
 import {
   BarcodeScanner,
-  SupportedFormat,
+  BarcodeFormat,
+  Barcode,
 } from "@capacitor-mlkit/barcode-scanning";
-import ExploreContainer from "../components/ExploreContainer";
 import { useState } from "react";
 import "./Home.css";
 
@@ -32,30 +32,39 @@ const Home: React.FC = () => {
 
       const result = await BarcodeScanner.scan({
         formats: [
-          SupportedFormat.EAN_13,
-          SupportedFormat.EAN_8,
-          SupportedFormat.UPC_A,
-          SupportedFormat.UPC_E,
-          SupportedFormat.QR_CODE, // Add other formats if needed
+          BarcodeFormat.Ean13,
+          BarcodeFormat.Ean8,
+          BarcodeFormat.UpcA,
+          BarcodeFormat.UpcE,
+          BarcodeFormat.QrCode, // Add other formats if needed
         ],
       });
 
       // Show the WebView background again
       document.body.classList.remove("barcode-scanner-active");
 
-      if (result.barcode) {
-        setScannedData(result.barcode.displayValue);
-        console.log("Scanned data:", result.barcode);
+      if (result.barcodes && result.barcodes.length > 0) {
+        const barcode: Barcode = result.barcodes[0];
+        setScannedData(barcode.displayValue);
+        console.log("Scanned data:", barcode);
         // You'll now have the barcode data in result.barcode.displayValue or similar property
-      } else if (result.cancelled) {
+      } else if (!result) {
         setErrorMessage("Scan cancelled by user.");
       } else {
         setErrorMessage("No barcode found or scan failed.");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       document.body.classList.remove("barcode-scanner-active");
       console.error("Scan error:", error);
-      setErrorMessage(`Scan failed: ${error.message || "Unknown error"}`);
+      if (error && typeof error === "object" && "message" in error) {
+        setErrorMessage(
+          `Scan failed: ${
+            (error as { message?: string }).message || "Unknown error"
+          }`
+        );
+      } else {
+        setErrorMessage("Scan failed: Unknown error");
+      }
     }
   };
 
