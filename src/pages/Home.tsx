@@ -72,13 +72,13 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Baby Food Scanner</IonTitle>
+          <IonTitle>Home Page</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Scanner</IonTitle>
+            <IonTitle size="large">Home Page</IonTitle>
           </IonToolbar>
         </IonHeader>
 
